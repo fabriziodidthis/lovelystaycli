@@ -79,6 +79,10 @@ if (!process.argv.slice(2).length) {
  * @returns {string} - The fetched data
  */
 if (options.fetch) {
+  if (!process.argv[3]) {
+    console.log('Please provide a valid username to fetch user data.')
+    process.exit(0)
+  }
   fetchAndSaveUserData(`${process.argv[3]}`)
 }
 
@@ -90,6 +94,10 @@ if (options.fetch) {
  * @returns {string} - The data of the user
  */
 if (options.show) {
+  if (!process.argv[3]) {
+    console.log('Please provide a valid username to fetch user data.')
+    process.exit(0)
+  }
   showUserData(`${process.argv[3]}`)
 }
 
