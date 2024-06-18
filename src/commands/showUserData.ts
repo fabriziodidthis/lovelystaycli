@@ -12,7 +12,7 @@ const showUserData = async (username: string): Promise<IGithubUser> => {
   console.log(`
   -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
-        Fetching user data for - ${username} -
+        Fetching user data for - \x1b[31m${username}\x1b[0m -
 
   -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
   `)

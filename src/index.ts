@@ -9,6 +9,7 @@ import welcomeMessage from './constants/welcomeMessage.js'
 import { programOptions } from './constants/types.js'
 import { fetchAndSaveUserData } from './commands/fetchAndSaveUserData.js'
 import { showUserData } from './commands/showUserData.js'
+import { listAllUsers } from './commands/listAllUsers.js'
 
 // Import package.json to get version
 // IF, for any reason, there is a need to import package.json, it can be done as follows:
@@ -32,13 +33,16 @@ program
     'LovelyStay CLI is a tool to manage your properties and bookings',
   )
   .usage('[options]')
-  .option('-f, --fetch [user]', 'Fetch and save user information')
+  .option('-f, --fetch [username...]', 'Fetch and save user information')
   .option(
     '-s, --show [user]',
     'Show user information from Github API (not from the saved information in the database)',
   )
-  .option('-r, --repo [user]', 'Retrieve users repositories')
-  .option('-w, --whois [user]', 'Retrieve users information from the database')
+  .option('-r, --repo [username]', 'Retrieve users repositories')
+  .option(
+    '-w, --whois [username]',
+    'Retrieve users information from the database',
+  )
   .option('-l, --list', 'List all users in the database')
   .option(
     '-g, --geo',
@@ -48,7 +52,7 @@ program
     '-la, --lang',
     'Retrieve users from programming language (when informed)',
   )
-
+  .exitOverride() // This is to prevent the default help message from being displayed
   .combineFlagAndOptionalValue(false) // This is to allow the use of flags without values
   .addHelpText('after', `1`) // This is to add help text after the help message
   .parse(process.argv)
@@ -107,5 +111,5 @@ if (options.show) {
  * @returns {string} - The data of all users in the database
  */
 if (options.list) {
-  console.log('Listing all users in the database')
+  listAllUsers()
 }
