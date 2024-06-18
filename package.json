@@ -1,4 +1,4 @@
-{
+ {
 	"name": "lovelystaycli",
 	"version": "0.0.1",
 	"private": true,
@@ -37,7 +37,10 @@
 		"docker:stop": "docker compose stop",
 		"docker:start": "docker compose start",
 		"docker:del": "docker system prune --all --volumes --force",
-		"upgrade": "yarn upgrade-interactive --latest"
+		"upgrade": "yarn upgrade-interactive --latest",
+		"clear": "rm -rf node_modules && rm -rf package-lock.json && rm -rf yarn.lock && yarn cache clean",
+		"test": "vitest --clearScreen --ui",
+		"coverage": "vitest run --coverage"
 	},
 	"dependencies": {
 		"@commander-js/extra-typings": "^12.1.0",
@@ -59,9 +62,11 @@
 		"eslint": "^9.5.0",
 		"eslint-plugin-vitest": "^0.5.4",
 		"globals": "^15.6.0",
+		"@vitest/ui": "^1.6.0",
 		"rimraf": "^5.0.7",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5",
-		"typescript-eslint": "^7.13.1"
+		"typescript-eslint": "^7.13.1",
+		"vitest": "^1.6.0"
 	}
 }
