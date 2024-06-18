@@ -1,0 +1,61 @@
+{
+	"name": "lovelystaycli",
+	"version": "0.0.1",
+	"private": true,
+	"description": "This is a project for a back-end position at Lovely Stay - https://www.lovelystay.com/pt, which have some rules inteded to be followed and used as guidelines.",
+	"main": "src/index.js",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fabriziodidthis/lovelystaycli.git"
+	},
+	"bin": {
+		"lovelystaycli": "./dist/src/index.js"
+	},
+	"keywords": [
+		"lovelystay",
+		"cli",
+		"github"
+	],
+	"author": {
+		"name": "Fabrizio Andre",
+		"email": "fabriziodidthis@gmail.com",
+		"url": "https://www.fabriziodidthis.com/"
+	},
+	"bugs": "https://github.com/fabriziodidthis/lovelystaycli/issues",
+	"homepage": "https://github.com/fabriziodidthis/lovelystaycli",
+	"type": "module",
+	"scripts": {
+		"build": "rimraf ./dist && npx tsc ",
+		"build:dev": "npx tsc -w",
+		"lovely": "yarn build && node -r dotenv/config ./dist/index.js",
+		"start": "node --loader ts-node/esm src/index.ts",
+		"typeorm": "typeorm-ts-node-esm",
+		"docker:run": "docker compose -p lovelystay -f docker-compose.yml up",
+		"docker:build": "docker compose -p lovelystay -f docker-compose.yml up --build",
+		"docker:down": "docker compose down",
+		"docker:stop": "docker compose stop",
+		"docker:start": "docker compose start",
+		"docker:del": "docker system prune --all --volumes --force",
+      "upgrade": "yarn upgrade-interactive --latest"
+	},
+	"dependencies": {
+		"@commander-js/extra-typings": "^12.1.0",
+		"class-validator": "^0.14.1",
+		"commander": "^12.1.0",
+		"dotenv": "^16.4.5",
+		"figlet": "^1.7.0",
+		"pg": "^8.12.0",
+		"pg-promise": "^11.8.0",
+		"reflect-metadata": "^0.2.2",
+		"typeorm": "0.3.20"
+	},
+	"devDependencies": {
+		"@tsconfig/node21": "^21.0.3",
+		"@types/figlet": "^1.5.8",
+		"@types/node": "^20.14.4",
+		"rimraf": "^5.0.7",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.4.5"
+	}
+}
