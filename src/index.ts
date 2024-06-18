@@ -37,13 +37,18 @@ program
     '-s, --show [user]',
     'Show user information from Github API (not from the saved information in the database)',
   )
+  .option('-r, --repo [user]', 'Retrieve users repositories')
+  .option('-w, --whois [user]', 'Retrieve users information from the database')
   .option('-l, --list', 'List all users in the database')
-  .option('-g, --geo', 'Retrieve users from location (when informed)')
+  .option(
+    '-g, --geo',
+    'Retrieve users from location (when informed in the Github user profile)',
+  )
   .option(
     '-la, --lang',
     'Retrieve users from programming language (when informed)',
   )
-  .option('-r, --repo', 'Retrieve users repositories')
+
   .combineFlagAndOptionalValue(false) // This is to allow the use of flags without values
   .addHelpText('after', `1`) // This is to add help text after the help message
   .parse(process.argv)

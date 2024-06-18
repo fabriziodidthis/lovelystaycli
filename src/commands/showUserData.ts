@@ -1,6 +1,6 @@
 import { IGithubUser } from 'constants/types.js'
 import { db } from '../database/config/pgpromise.js'
-import validateUser from '../helpers/usernameValidator.js'
+import validateUser from '../validators/usernameValidator.js'
 
 /**
  * @description Show user information

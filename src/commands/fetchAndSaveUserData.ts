@@ -1,5 +1,5 @@
 import { IGithubUser } from '../constants/types.js'
-import validateUser from '../helpers/usernameValidator.js'
+import validateUser from '../validators/usernameValidator.js'
 import { db } from '../database/config/pgpromise.js'
 
 // Fetch user data from GitHub API
