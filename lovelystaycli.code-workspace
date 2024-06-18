@@ -33,9 +33,8 @@
       "source.fixAll": "always",
       "eslint.format.enable": "always"
     },
-    "eslint.alwaysShowStatus": true,
     "eslint.options": {
-      "configFile": ".eslintrc.json"
+      "configFile": "./.eslintrc.config.js"
     },
     "eslint.run": "onSave",
     "eslint.codeActionsOnSave.mode": "all",
@@ -54,7 +53,7 @@
       "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "[typescript]": {
-      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[jsonc]": {
       "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -69,7 +68,6 @@
   },
   "extensions": {
     "recommendations": [
-      "dbaeumer.vscode-eslint",
       "esbenp.prettier-vscode",
       "vitest.explorer"
     ]
