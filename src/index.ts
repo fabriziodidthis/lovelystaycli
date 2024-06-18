@@ -8,6 +8,7 @@ import { program } from '@commander-js/extra-typings'
 import welcomeMessage from './constants/welcomeMessage.js'
 import { programOptions } from './constants/types.js'
 import { fetchAndSaveUserData } from './commands/fetchAndSaveUserData.js'
+import { showUserData } from './commands/showUserData.js'
 
 // Import package.json to get version
 // IF, for any reason, there is a need to import package.json, it can be done as follows:
@@ -32,7 +33,10 @@ program
   )
   .usage('[options]')
   .option('-f, --fetch [user]', 'Fetch and save user information')
-  .option('-s, --show [user]', 'Show user information')
+  .option(
+    '-s, --show [user]',
+    'Show user information from Github API (not from the saved information in the database)',
+  )
   .option('-l, --list', 'List all users in the database')
   .option('-g, --geo', 'Retrieve users from location (when informed)')
   .option(
@@ -71,6 +75,17 @@ if (!process.argv.slice(2).length) {
  */
 if (options.fetch) {
   fetchAndSaveUserData(`${process.argv[3]}`)
+}
+
+/**
+ * @description When the show option is passed, the CLI should show the user data
+ * from the GitHub API and display it in the console.
+ * The show option should accept a username as an argument.
+ * @param {string} - The username to show data from
+ * @returns {string} - The data of the user
+ */
+if (options.show) {
+  showUserData(`${process.argv[3]}`)
 }
 
 /**
