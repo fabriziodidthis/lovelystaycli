@@ -1,5 +1,10 @@
-import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
+import {
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+} from 'class-validator'
 
+// https://www.npmjs.com/package/class-validator#custom-validation-classes
 @ValidatorConstraint({ name: 'isGithubUsernameValid', async: false })
 export class isGithubUsernameValid implements ValidatorConstraintInterface {
   validate(username: string, args: ValidationArguments) {
@@ -8,7 +13,7 @@ export class isGithubUsernameValid implements ValidatorConstraintInterface {
   }
 
   defaultMessage(args: ValidationArguments) {
-    // here you can provide default error message if validation failed
-    return 'Username ($value) is invalid. Please provide a valid username';
+    // Message when the username is invalid
+    return 'Username - $value - is invalid. Please provide a valid username, it has to be alphanumeric and follow the GitHub username rules - https://docs.github.com/en/enterprise-cloud@latest/admin/identity-and-access-management/iam-configuration-reference/username-considerations-for-external-authentication#about-username-normalization'
   }
 }

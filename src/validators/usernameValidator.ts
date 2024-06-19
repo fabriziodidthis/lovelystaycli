@@ -4,7 +4,7 @@ const validateUser = (username: string) => {
   const isValid = usernameValidator.test(username)
   if (!isValid) {
     console.error('Invalid username. Please provide a valid username.')
-    process.exit(1)
+    process.exit(0)
   }
 
   return isValid

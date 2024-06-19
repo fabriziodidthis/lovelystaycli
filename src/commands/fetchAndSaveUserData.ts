@@ -1,6 +1,7 @@
-import { IGithubUser } from '../constants/types.js'
+import { githubUserFound, IGithubUser } from '../constants/types.js'
 import validateUser from '../validators/usernameValidator.js'
 import { db } from '../database/config/pgpromise.js'
+import { fetchUserDataFromGithub } from '../helpers/fetchUser.js'
 
 // Fetch user data from GitHub API
 const fetchAndSaveUserData = async (username: string): Promise<IGithubUser> => {
@@ -15,21 +16,43 @@ const fetchAndSaveUserData = async (username: string): Promise<IGithubUser> => {
   validateUser(username)
 
   try {
-    const fetchUserData = await fetch(
-      `https://api.github.com/users/${username}`,
-    )
-    if (!fetchUserData.ok) {
-      throw new Error('Failed to fetch user data')
-    }
-    if (fetchUserData.status === 403) {
-      console.log('You have exceeded the rate limit for GitHub API.')
-    }
-    if (fetchUserData.status === 404) {
-      console.log(`The username - ${username} - could not be found.`)
-    }
+    fetchUserDataFromGithub(username)
 
-    const fetchUserDataToJSON = await fetchUserData.json()
-    const { login, id, node_id } = fetchUserDataToJSON as any
+    const userData = await fetchUserDataFromGithub(username)
+    const {
+      login,
+      id,
+      node_id,
+      avatar_url,
+      gravatar_id,
+      url,
+      html_url,
+      followers_url,
+      following_url,
+      gists_url,
+      starred_url,
+      subscriptions_url,
+      organizations_url,
+      repos_url,
+      events_url,
+      received_events_url,
+      type,
+      site_admin,
+      name,
+      company,
+      blog,
+      location,
+      email,
+      hireable,
+      bio,
+      twitter_username,
+      public_repos,
+      public_gists,
+      followers,
+      following,
+      created_at,
+      updated_at,
+    } = userData as githubUserFound
 
     const userExist = await db.oneOrNone(
       'SELECT * FROM github_users WHERE login = $1',
@@ -43,14 +66,47 @@ const fetchAndSaveUserData = async (username: string): Promise<IGithubUser> => {
     }
     try {
       await db.none(
-        'INSERT INTO github_users(login, id, node_id) VALUES($1, $2, $3)',
-        [login, id, node_id],
+        'INSERT INTO github_users(login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin, name, company, blog, location, email, hireable, bio, twitter_username, public_repos, public_gists, followers, following, created_at, updated_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32)',
+        [
+          login,
+          id,
+          node_id,
+          avatar_url,
+          gravatar_id,
+          url,
+          html_url,
+          followers_url,
+          following_url,
+          gists_url,
+          starred_url,
+          subscriptions_url,
+          organizations_url,
+          repos_url,
+          events_url,
+          received_events_url,
+          type,
+          site_admin,
+          name,
+          company,
+          blog,
+          location,
+          email,
+          hireable,
+          bio,
+          twitter_username,
+          public_repos,
+          public_gists,
+          followers,
+          following,
+          created_at,
+          updated_at,
+        ],
       )
       console.log(`User ${JSON.stringify(login)} saved successfully`)
     } catch (error) {
       console.error('Error saving user', error)
     }
-    console.table(fetchUserDataToJSON)
+    console.table(userData)
   } catch (error) {
     console.error(
       'Something went wrong while fetching the user, try again later.',
