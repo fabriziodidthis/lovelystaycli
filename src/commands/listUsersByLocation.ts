@@ -1,5 +1,6 @@
+import { validateInput } from '../validators/inputValidator.js'
 import { db } from '../database/config/pgpromise.js'
-import { githubUserFound } from 'constants/types.js'
+import { githubUserFound } from '../constants/types.js'
 
 /**
  * @description List users by location
@@ -10,18 +11,13 @@ import { githubUserFound } from 'constants/types.js'
 async function listUsersByLocation(
   location: string,
 ): Promise<Array<githubUserFound>> {
-  const users = await db.manyOrNone(
-    'SELECT * FROM github_users WHERE location = $1',
-    [location],
-  )
-  /*
+  validateInput(location)
 
   const users = await db.manyOrNone(
     'SELECT * FROM github_users WHERE location = $1',
     [location],
   )
-  console.table(users)
-  */
+
   if (users.length === 0) {
     console.log('No users found from the entered location')
     return []
@@ -34,7 +30,7 @@ async function listUsersByLocation(
     'public_repos',
     'hireable',
   ])
-  return users
+  return []
 }
 
 export { listUsersByLocation }
