@@ -25,14 +25,14 @@ Your goal is to develop a command-line application using NodeJS + TypeScript + P
   - [x] Location
   - [x] bonus points for additional fields;
 
-[ ] 2. Using a different command-line option, it:
+[x] 2. Using a different command-line option, it:
 
-- [ ] should be possible to
+- [x] should be possible to
   - [x] fetch and display all users already on the database (showing them on the command line);
 
-[ ] 3. Improving on the previous requirement, it should also
+[x] 3. Improving on the previous requirement, it should also
 
-- [ ] be possible to list users only from a given location (again, using a command-line option);
+- [x] be possible to list users only from a given location (again, using a command-line option);
 
 [ ] 4. Finally, the application should also query:
 
@@ -119,7 +119,7 @@ Both migration and models will be created in the designed folders in the `data-s
 
 ### Data validation
 
-One of the rules stated to this project is to 'avoid SQL injections'. The only time the user can actually write something, is when it is requested the Github username. Fair enough. Searching for Github policy regarding username normalization, I found [this article](https://docs.github.com/en/enterprise-cloud@latest/admin/identity-and-access-management/iam-configuration-reference/username-considerations-for-external-authentication#about-username-normalization) where it says `Usernames for user accounts on GitHub can only contain alphanumeric characters and dashes (-).`. So, following this logic, the data sanitization will happen in the time for the username input using a regex.
+One of the rules stated to this project is to 'avoid SQL injections'. Fair enough. Searching for Github policy regarding username normalization, I found [this article](https://docs.github.com/en/enterprise-cloud@latest/admin/identity-and-access-management/iam-configuration-reference/username-considerations-for-external-authentication#about-username-normalization) where it says `Usernames for user accounts on GitHub can only contain alphanumeric characters and dashes (-).`. So, following this logic, the data sanitization will happen in the time for the username input using a regex.
 
 And for the length, [this documentation](https://docs.github.com/en/enterprise-cloud@latest/admin/identity-and-access-management/iam-configuration-reference/username-considerations-for-external-authentication#resolving-username-problems) here says I can only have an username with 39 characters long.
 
