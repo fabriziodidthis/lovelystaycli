@@ -10,6 +10,7 @@ import { programOptions } from './constants/types.js'
 import { fetchAndSaveUserData } from './commands/fetchAndSaveUserData.js'
 import { showUserData } from './commands/showUserData.js'
 import { listAllUsers } from './commands/listAllUsers.js'
+import { listUsersByLocation } from './commands/listUsersByLocation.js'
 
 // Import package.json to get version
 // IF, for any reason, there is a need to import package.json, it can be done as follows:
@@ -112,4 +113,13 @@ if (options.show) {
  */
 if (options.list) {
   listAllUsers()
+}
+
+/**
+ * @description List all users by location
+ * @param {string} - The location to list users from
+ * @returns {string} - The data of all users in the database based on their location
+ */
+if (options.geo) {
+  listUsersByLocation(`${process.argv[3]}`)
 }

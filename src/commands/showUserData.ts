@@ -1,7 +1,9 @@
-import { IGithubUser } from 'constants/types.js'
-import { db } from '../database/config/pgpromise.js'
+import { githubUserFound, IGithubUser } from '../constants/types.js'
 import validateUser from '../validators/usernameValidator.js'
 
+import terminalImage from 'terminal-image'
+import got from 'got'
+import { fetchUserDataFromGithub } from '../helpers/fetchUser.js'
 /**
  * @description Show user information
  * @param userData
@@ -20,21 +22,18 @@ const showUserData = async (username: string): Promise<IGithubUser> => {
   validateUser(username)
 
   try {
-    const fetchUserData = await fetch(
-      `https://api.github.com/users/${username}`,
+    const userData = (await fetchUserDataFromGithub(
+      username,
+    )) as githubUserFound
+    const userIMG = await got(userData.avatar_url).buffer()
+    console.log(
+      await terminalImage.buffer(userIMG, {
+        width: '30%',
+        height: '30%',
+        preserveAspectRatio: true,
+      }),
     )
-    if (!fetchUserData.ok) {
-      throw new Error('Failed to fetch user data')
-    }
-    if (fetchUserData.status === 403) {
-      console.log('You have exceeded the rate limit for GitHub API.')
-    }
-    if (fetchUserData.status === 404) {
-      console.log(`The username - ${username} - could not be found.`)
-    }
-
-    const fetchUserDataToJSON = await fetchUserData.json()
-    console.table(fetchUserDataToJSON)
+    console.table(userData)
     return null
   } catch (error) {
     console.error(

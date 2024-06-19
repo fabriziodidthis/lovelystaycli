@@ -28,11 +28,11 @@ type githubUserFound = {
   name: string
   company?: string
   blog?: string
-  location?: string
-  email?: string
-  hireable: boolean
-  bio?: string
-  twitter_username?: string
+  location?: string | null
+  email?: string | null
+  hireable: boolean | null
+  bio?: string | null
+  twitter_username?: string | null
   public_repos: number
   public_gists: number
   followers: number
@@ -49,4 +49,4 @@ type githubUserNotFound = {
 
 type IGithubUser = githubUserFound | githubUserNotFound | null
 
-export { programOptions, IGithubUser }
+export { programOptions, IGithubUser, githubUserFound, githubUserNotFound }
