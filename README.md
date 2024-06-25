@@ -96,7 +96,7 @@ Along the command above, you might select one of the options below
 - `-r username` - Retrieve user repositories
 - `-w username` - Show user information from the database
 - `-l` - to retrieve all the information already saved in the database
-- `-g` - Retrieve users from location (when informed in the Github user profile)
+- `-g 'location' ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `lovely -g New York`. Also, the city needs to match exactly to what is in the database, thus `New York` is different of `new York` or `New york` or any other variation.
 - `-la` - Retrieve users from programming language (when informed)
 
 ### How to create migrations?

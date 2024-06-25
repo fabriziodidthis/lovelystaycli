@@ -53,17 +53,17 @@ program
     '-la, --lang',
     'Retrieve users from programming language (when informed)',
   )
-  .exitOverride() // This is to prevent the default help message from being displayed
-  .combineFlagAndOptionalValue(false) // This is to allow the use of flags without values
-  .addHelpText('after', `1`) // This is to add help text after the help message
+  .combineFlagAndOptionalValue(false)
   .parse(process.argv)
 
 program.on('--help', () => {
   console.log('')
+  console.log('')
   console.log('Examples:')
+  console.log('')
   console.log('  $ lovely -f fabriziodidthis')
+  console.log('  $ lovely -l fabriziodidthis')
   console.log('  $ lovely -s fabriziodidthis')
-  console.log('  $ lovely -l')
   console.log('  $ lovely -g "Lisbon, Portugal"')
   console.log('  $ lovely -la "JavaScript"')
   console.log('  $ lovely -r fabriziodidthis')

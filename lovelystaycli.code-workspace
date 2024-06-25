@@ -18,16 +18,10 @@
     ],
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.formatOnPaste": true,
-    "eslint.validate": [
-      "javascript",
-      "typescript"
-    ],
+    "eslint.validate": ["javascript", "typescript"],
     "eslint.lintTask.options": "-c ./.eslintrc.config.js",
     "eslint.lintTask.enable": true,
-    "eslint.probe": [
-      "javascript",
-      "typescript"
-    ],
+    "eslint.probe": ["javascript", "typescript"],
     "eslint.format.enable": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": "always",
@@ -45,9 +39,7 @@
       "*"
     ],
     "debug.javascript.terminalOptions": {
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     },
     "[javascript]": {
       "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -56,7 +48,7 @@
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[jsonc]": {
-      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+      "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[dockerfile]": {
       "editor.defaultFormatter": "ms-azuretools.vscode-docker"
@@ -64,12 +56,9 @@
     "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
     "javascript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
-    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always"
   },
   "extensions": {
-    "recommendations": [
-      "esbenp.prettier-vscode",
-      "vitest.explorer"
-    ]
+    "recommendations": ["esbenp.prettier-vscode", "vitest.explorer"]
   }
 }

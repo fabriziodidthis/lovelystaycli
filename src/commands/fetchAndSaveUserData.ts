@@ -4,7 +4,9 @@ import { db } from '../database/config/pgpromise.js'
 import { fetchUserDataFromGithub } from '../helpers/fetchUser.js'
 
 // Fetch user data from GitHub API
-const fetchAndSaveUserData = async (username: string): Promise<IGithubUser> => {
+const fetchAndSaveUserData = async (
+  username: string,
+): Promise<IGithubUser | null> => {
   console.log(`
   -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 

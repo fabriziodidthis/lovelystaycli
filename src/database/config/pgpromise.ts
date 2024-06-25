@@ -1,6 +1,5 @@
 import pgPromise from 'pg-promise'
 import dotenv from 'dotenv'
-import { debug } from 'console'
 dotenv.config()
 
 const { POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER } = process.env

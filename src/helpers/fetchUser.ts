@@ -3,7 +3,7 @@ import validateUser from '../validators/usernameValidator.js'
 
 const fetchUserDataFromGithub = async (
   username: string,
-): Promise<IGithubUser> => {
+): Promise<IGithubUser | null> => {
   try {
     validateUser(username)
 

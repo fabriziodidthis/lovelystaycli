@@ -10,7 +10,7 @@ import { fetchUserDataFromGithub } from '../helpers/fetchUser.js'
  * @returns A table with the user information
  */
 
-const showUserData = async (username: string): Promise<IGithubUser> => {
+const showUserData = async (username: string): Promise<IGithubUser | null> => {
   console.log(`
   -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
