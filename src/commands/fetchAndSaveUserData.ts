@@ -64,6 +64,7 @@ const fetchAndSaveUserData = async (
       console.log(
         `User ${JSON.stringify(login)} already exists in the database.`,
       )
+      console.log(userExist)
       return null
     }
     try {
