@@ -11,6 +11,7 @@ import { fetchAndSaveUserData } from './commands/fetchAndSaveUserData.js'
 import { showUserData } from './commands/showUserData.js'
 import { listAllUsers } from './commands/listAllUsers.js'
 import { listUsersByLocation } from './commands/listUsersByLocation.js'
+import { assert } from 'node:console'
 
 // Import package.json to get version
 // IF, for any reason, there is a need to import package.json, it can be done as follows:
@@ -84,11 +85,12 @@ if (!process.argv.slice(2).length) {
  * @returns {string} - The fetched data
  */
 if (options.fetch) {
+  assert(process.argv[3], 'Please provide a valid username to fetch user data.')
   if (!process.argv[3]) {
     console.log('Please provide a valid username to fetch user data.')
     process.exit(0)
   }
-  fetchAndSaveUserData(`${process.argv[3]}`)
+  void fetchAndSaveUserData(`${process.argv[3]}`)
 }
 
 /**
@@ -99,11 +101,12 @@ if (options.fetch) {
  * @returns {string} - The data of the user
  */
 if (options.show) {
+  assert(process.argv[3], 'Please provide a valid username to fetch user data.')
   if (!process.argv[3]) {
     console.log('Please provide a valid username to fetch user data.')
     process.exit(0)
   }
-  showUserData(`${process.argv[3]}`)
+  void showUserData(`${process.argv[3]}`)
 }
 
 /**
@@ -112,7 +115,7 @@ if (options.show) {
  * @returns {string} - The data of all users in the database
  */
 if (options.list) {
-  listAllUsers()
+  void listAllUsers()
 }
 
 /**
@@ -121,5 +124,9 @@ if (options.list) {
  * @returns {string} - The data of all users in the database based on their location
  */
 if (options.geo) {
-  listUsersByLocation(`${process.argv[3]}`)
+  assert(
+    process.argv[3],
+    'There is no user with this location. Please provide a valid location.',
+  )
+  void listUsersByLocation(`${process.argv[3]}`)
 }
