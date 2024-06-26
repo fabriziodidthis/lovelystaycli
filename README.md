@@ -36,7 +36,9 @@ Your goal is to develop a command-line application using NodeJS + TypeScript + P
 
 [ ] 4. Finally, the application should also query:
 
-- [ ] the programming languages this user seems to know/have repositories with, and store them on the database as well - allowing to query a user per location and/or programming languages;
+- [ ] the programming languages this user seems to know/have repositories with, and store them on the database as well -
+      [x] allowing to query a user per location
+      [ ] and/or programming languages;
 
 There are some mandatory requirements:
 [x] You must use:
