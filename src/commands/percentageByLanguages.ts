@@ -1,28 +1,34 @@
-// @ts-nocheck
-import { db } from './database/config/pgpromise.js'
+import { userLanguages, userRepositories } from '../constants/types.js'
 
-async function fetchRepositories(username) {
+async function fetchRepositories(username: string) {
   const repoUrl = `https://api.github.com/users/${username}/repos`
   const response = await fetch(repoUrl)
-  const userRepositories = await response.json()
+  const userRepositories: userRepositories =
+    (await response.json()) as userRepositories
   return userRepositories.map(repo => repo.name)
 }
 
-async function fetchLanguagesForUser(username) {
+async function percentageByLanguages(
+  username: string,
+): Promise<{ [key: string]: number } | undefined> {
   try {
     const repositories = await fetchRepositories(username)
-    const languageData = {}
+    const languageData: { [key: string]: number } = {}
 
     for (const repository of repositories) {
       const url = `https://api.github.com/repos/${username}/${repository}/languages`
       const response = await fetch(url)
       const repoLanguages = await response.json()
 
-      for (const [language, bytes] of Object.entries(repoLanguages)) {
-        if (!languageData[language]) {
-          languageData[language] = 0
+      for (const [language, bytes] of Object.entries(
+        repoLanguages as { [s: string]: number },
+      )) {
+        const languageLower = language.toLowerCase()
+
+        if (!languageData[languageLower]) {
+          languageData[languageLower] = 0
         }
-        languageData[language] += bytes
+        languageData[languageLower] += bytes
       }
     }
 
@@ -38,24 +44,24 @@ async function fetchLanguagesForUser(username) {
     )
 
     // Sort by percentage, descending
-    languagePercentages.sort((a, b) => b.percentage - a.percentage)
-
-    // Format the output
-    const formattedOutput = languagePercentages
-      .map(({ language, percentage }) => `${language}: ${percentage}%`)
-      .join(', ')
-
-    // Save the result to the database
-    await db.any(
-      // 'INSERT INTO github_users(user_languages) VALUES($1) WHERE login = $2',
-      'UPDATE github_users SET user_languages = $1 WHERE login = $2',
-      [formattedOutput, username],
+    languagePercentages.sort(
+      (
+        a: { language: string; percentage: string },
+        b: { language: string; percentage: string },
+      ) => parseFloat(b.percentage) - parseFloat(a.percentage),
     )
 
-    console.log('Languages saved to database for user:', username)
+    const formattedOutput: { [key: string]: number } =
+      languagePercentages.reduce((acc, { language, percentage }) => {
+        // @ts-expect-error - language is a string
+        acc[language] = `${percentage}%`
+        return acc
+      }, {})
+
+    return formattedOutput
   } catch (error) {
     console.error('Error fetching language data or saving to database:', error)
   }
 }
 
-export { fetchLanguagesForUser }
+export { percentageByLanguages }
