@@ -12,7 +12,7 @@ Guidelines for tools used in this project
 
 ### Quick disclaimer
 
-Since this is only a CLI for a test for a job position, I didn't took care of how many request would run in a small time window so, this is the reason for not using `octokit` package. Since this would run only a few times and not for real production, I don't need to take care about how many requests will have in a small time window. But, knowing the fact this is for a job position, I need to take care about other things that are already handled in the project as it follows.
+Since this is only a CLI for a test for a job position, I didn't took care of how many request would run in a small time window so, this is the reason for not using `octokit` package (and also because [Github only allows 60 unauthenticated requests per hour](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#primary-rate-limit-for-unauthenticated-users)). Since this would run only a few times and not for real production, I don't need to take care about how many requests will have in a small time window. But, knowing the fact this is for a job position, I need to take care about other things that are already handled in the project as it follows.
 
 ---
 
@@ -36,7 +36,7 @@ Your goal is to develop a command-line application using NodeJS + TypeScript + P
 
 [ ] 4. Finally, the application should also query:
 
-- [ ] the programming languages this user seems to know/have repositories with, and store them on the database as well -
+- [x] the programming languages this user seems to know/have repositories with, and store them on the database as well -
       [x] allowing to query a user per location
       [ ] and/or programming languages;
 
@@ -53,7 +53,7 @@ There are some mandatory requirements:
 
 - [x] For database access, you must use this library: https://github.com/vitaly-t/pg-promise
 - [x] For the processing (business logic) functions you should use either native ES6 functions or the library https://ramdajs.com/docs/ (or both);
-- [ ] All async functions must be composable, meaning you can call them in sequence without asynchronicity issues;
+- [x] All async functions must be composable, meaning you can call them in sequence without asynchronicity issues;
 - [x] You shall have one main function and you should avoid process.exit() calls to the bare minimum;
 - [x] You must not use classes, as it is not justified for such a small app (we use almost no classes on our code);
 - [x] Your code must be safe, assume all input strings as insecure and avoid SQL injections;
@@ -89,17 +89,15 @@ Now you have NodeJS, Docker and GIT installed and operational (if not, restart y
 
 - `yarn` - to install all the necessary packages to run the application
 - `yarn docker: build` - to create the Docker container and to use the Postgres database and Adminer to visualize the database in a web dashboard.
-- `yarn lovely` - to run the application and see the available options you can use
+- `yarn migration:run` - to create the table and columns required in the database
+- `yarn lovely` - to run the application with the following options below:
 
-Along the command above, you might select one of the options below
-
-- `-f username` - to fetch and save any valid GitHub username and see the data related to it
-- `-s username` - to fetch any valid Github username data from GitHub API and show it in the console
-- `-r username` - Retrieve user repositories
-- `-w username` - Show user information from the database
-- `-l` - to retrieve all the information already saved in the database
-- `-g 'location' ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `lovely -g New York`. Also, the city needs to match exactly to what is in the database, thus `New York` is different of `new York` or `New york` or any other variation.
-- `-la` - Retrieve users from programming language (when informed)
+  - `-f username` - to fetch and save any valid GitHub username and see the data related to it
+  - `-s username` - to fetch any valid Github username data from GitHub API and show it in the console
+  - `-w username` - Show user information from the database
+  - `-l` - to retrieve all the information already saved in the database
+  - `-g 'location' ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `lovely -g New York`. Also, the city needs to match exactly to what is in the database, thus `New York` is different of `new York` or `New york` or any other variation.
+  - `-la` - Retrieve users from programming language (when informed)
 
 ### How to create migrations?
 
@@ -153,3 +151,7 @@ Since I had the option to choose between any tool to help me in this time, the l
 There is a yarn script called `docker:del`. This command will DELETE ALL YOUR DOCKER CONTAINERS IN YOUR MACHINE RIGHT AWAY. Use it ONLY if you are completely sure of what you are doing and TO NOT DELETE EVERY SINGLE CONTAINER YOU MAY HAVE.
 
 Use it with caution.
+
+# Known technical debts
+
+1 - When searching for a specific language using the flag `-la`, break the languages columns to not be a big single line.

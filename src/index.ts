@@ -12,6 +12,7 @@ import { showUserData } from './commands/showUserData.js'
 import { listAllUsers } from './commands/listAllUsers.js'
 import { listUsersByLocation } from './commands/listUsersByLocation.js'
 import { assert } from 'node:console'
+import { listUsersByLanguage } from './commands/listUsersByLanguage.js'
 
 // Import package.json to get version
 // IF, for any reason, there is a need to import package.json, it can be done as follows:
@@ -124,9 +125,19 @@ if (options.list) {
  * @returns {string} - The data of all users in the database based on their location
  */
 if (options.geo) {
+  assert(process.argv[3], 'Please provide a valid location to search.')
+  void listUsersByLocation(`${process.argv[3]}`)
+}
+
+/**
+ * @description List all users by programming language
+ * @param {string} - The programming language to list users from
+ * @returns {string} - The data of all users in the database based on the programming language searched
+ */
+if (options.lang) {
   assert(
     process.argv[3],
-    'There is no user with this location. Please provide a valid location.',
+    'Please provide a valid programming language to search.',
   )
-  void listUsersByLocation(`${process.argv[3]}`)
+  void listUsersByLanguage(`${process.argv[3]}`)
 }

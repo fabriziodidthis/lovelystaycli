@@ -39,6 +39,7 @@ type githubUserFound = {
   following: number
   created_at: Date
   updated_at: Date
+  user_languages?: userLanguages
 }
 
 type githubUserNotFound = {
@@ -152,10 +153,13 @@ type userRepositories = [
   },
 ]
 
+type userLanguages = [{ [key: string]: number }]
+
 export {
   programOptions,
   IGithubUser,
   githubUserFound,
   githubUserNotFound,
   userRepositories,
+  userLanguages,
 }
