@@ -92,11 +92,11 @@ Now you have NodeJS, Docker and GIT installed and operational (if not, restart y
 - `yarn migration:run` - to create the table and columns required in the database
 - `yarn lovely` - to run the application with the following options below:
 
-  - `-f username` - to fetch and save any valid GitHub username and see the data related to it
+  - `-f username` - to fetch and save any valid GitHub username and see the data related to it.
   - `-s username` - to fetch any valid Github username data from GitHub API and show it in the console
-  - `-w username` - Show user information from the database
+  - `-w username` - Show user information from the database. Since all usernames are saves all lower case, you can just search for `lovely -w username` instead of whatever is the username.
   - `-l` - to retrieve all the information already saved in the database
-  - `-g 'location' ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `lovely -g New York`. Also, the city needs to match exactly to what is in the database, thus `New York` is different of `new York` or `New york` or any other variation.
+  - `-g 'location' ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `lovely -g New York`. Since the location is saved all lower case, you can just use `lovely -g 'new york'` and you are good to go.
   - `-la` - Retrieve users from programming language (when informed)
 
 ### How to create migrations?
