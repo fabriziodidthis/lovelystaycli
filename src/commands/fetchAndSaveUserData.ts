@@ -59,6 +59,9 @@ const fetchAndSaveUserData = async (
       updated_at,
     } = userData as githubUserFound
 
+    const locationToLowercase = location?.toLowerCase()
+    const loginToLowercase = login.toLowerCase()
+
     // Check if user already exists in the database
     const userExist: IGithubUser | null = await db.oneOrNone(
       'SELECT * FROM github_users WHERE login = $1',
@@ -82,7 +85,7 @@ const fetchAndSaveUserData = async (
       await db.none(
         'INSERT INTO github_users(login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin, name, company, blog, location, email, hireable, bio, twitter_username, public_repos, public_gists, followers, following, created_at, updated_at, user_languages) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, ARRAY[$33])',
         [
-          login,
+          loginToLowercase,
           id,
           node_id,
           avatar_url,
@@ -103,7 +106,7 @@ const fetchAndSaveUserData = async (
           name,
           company,
           blog,
-          location,
+          locationToLowercase,
           email,
           hireable,
           bio,
