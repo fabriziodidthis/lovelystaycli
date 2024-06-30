@@ -5,7 +5,7 @@ import {
 } from '../constants/types.js'
 import validateUser from '../validators/usernameValidator.js'
 import { db } from '../database/config/pgpromise.js'
-import { fetchUserDataFromGithub } from '../helpers/fetchUser.js'
+import { fetchUserDataFromGithub } from '../helpers/fetchUserDataFromGithub.js'
 import { percentageByLanguages } from './percentageByLanguages.js'
 
 // Fetch user data from GitHub API

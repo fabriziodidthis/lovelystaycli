@@ -8,11 +8,12 @@ import { program } from '@commander-js/extra-typings'
 import welcomeMessage from './constants/welcomeMessage.js'
 import { programOptions } from './constants/types.js'
 import { fetchAndSaveUserData } from './commands/fetchAndSaveUserData.js'
-import { showUserData } from './commands/showUserData.js'
+import { showUserDataFromGithub } from './commands/showUserDataFromGithub.js'
 import { listAllUsers } from './commands/listAllUsers.js'
 import { listUsersByLocation } from './commands/listUsersByLocation.js'
 import { assert } from 'node:console'
 import { listUsersByLanguage } from './commands/listUsersByLanguage.js'
+import { showUserDataFromDatabase } from './commands/showUserDataFromDatabase.js'
 
 // Import package.json to get version
 // IF, for any reason, there is a need to import package.json, it can be done as follows:
@@ -65,6 +66,7 @@ program.on('--help', () => {
   console.log('')
   console.log('  $ lovely -f fabriziodidthis')
   console.log('  $ lovely -l fabriziodidthis')
+  console.log('  $ lovely -w fabriziodidthis')
   console.log('  $ lovely -s fabriziodidthis')
   console.log('  $ lovely -g "Lisbon, Portugal"')
   console.log('  $ lovely -la "JavaScript"')
@@ -107,7 +109,7 @@ if (options.show) {
     console.log('Please provide a valid username to fetch user data.')
     process.exit(0)
   }
-  void showUserData(`${process.argv[3]}`)
+  void showUserDataFromGithub(`${process.argv[3]}`)
 }
 
 /**
@@ -140,4 +142,17 @@ if (options.lang) {
     'Please provide a valid programming language to search.',
   )
   void listUsersByLanguage(`${process.argv[3]}`)
+}
+
+/**
+ * @description Show user data from the database
+ * @param {string} - The username to show data from
+ * @returns {string} - The data of the user
+ */
+if (options.whois) {
+  assert(
+    process.argv[3],
+    'Please provide a valid username to fetch user data from the database.',
+  )
+  void showUserDataFromDatabase(`${process.argv[3]}`)
 }

@@ -5,6 +5,7 @@ type programOptions = {
   geo?: () => string
   lang?: () => string
   repo?: () => string
+  whois?: () => string
 }
 type githubUserFound = {
   login: string
