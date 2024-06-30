@@ -49,7 +49,8 @@
     "postinstall": "husky || true"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown",
+    "*.ts": "eslint --cache --fix"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.1.0",
