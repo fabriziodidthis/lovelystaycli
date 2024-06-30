@@ -34,11 +34,11 @@ Your goal is to develop a command-line application using NodeJS + TypeScript + P
 
 - [x] be possible to list users only from a given location (again, using a command-line option);
 
-[ ] 4. Finally, the application should also query:
+[x] 4. Finally, the application should also query:
 
 - [x] the programming languages this user seems to know/have repositories with, and store them on the database as well -
       [x] allowing to query a user per location
-      [ ] and/or programming languages;
+      [c] and/or programming languages;
 
 There are some mandatory requirements:
 [x] You must use:
@@ -53,7 +53,7 @@ There are some mandatory requirements:
 
 - [x] For database access, you must use this library: https://github.com/vitaly-t/pg-promise
 - [x] For the processing (business logic) functions you should use either native ES6 functions or the library https://ramdajs.com/docs/ (or both);
-- [x] All async functions must be composable, meaning you can call them in sequence without asynchronicity issues;
+- [ ] All async functions must be composable, meaning you can call them in sequence without asynchronicity issues;
 - [x] You shall have one main function and you should avoid process.exit() calls to the bare minimum;
 - [x] You must not use classes, as it is not justified for such a small app (we use almost no classes on our code);
 - [x] Your code must be safe, assume all input strings as insecure and avoid SQL injections;
