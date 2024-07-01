@@ -65,40 +65,75 @@ There are some mandatory requirements:
 
 ---
 
-# How to run
+# Tools to use this application
 
 - Be sure you have NodeJS installed on your system running the command `node -v` on your terminal. If it tells you NodeJS is not installed, open the [NodeJS website](https://nodejs.org/en/download/prebuilt-installer), download and install according to the instructions to your operational system. Try again to run the command `node -v`. In case you still get the same message saying NodeJS is not installed, please restart your computer and try again.
 
-As long it is required to this application to have a PostgreSQL database, I could choose between using Docker or an online service like AWS or Render. For the sake of simplicity, Docker has been the one selected to deliver this task.
+- As long it is required to this application to have a PostgreSQL database, I could choose between using Docker or an online service like AWS or Render. For the sake of simplicity, Docker has been the one selected to deliver this task. In order to build the Docker container in your machine, please make sure you have Docker installed by running in your terminal the command `docker`. If it returns you do not have it installed, please install it accordingly to your current operational system in [this link](https://www.docker.com/products/docker-desktop/).
 
-In order to build the Docker container in your machine, please make sure you have Docker installed by running in your terminal the command `docker`. If it returns you do not have it installed, please install it according to your current operational system in [this link](https://www.docker.com/products/docker-desktop/).
+- As long we will use `Yarn` during the usage of this application, we need to install it. Navigate to [Yarn website](https://classic.yarnpkg.com/en/docs/install) and install it accordingly to your operational system.
+
+- We also will use `GIT` in this application, so you also need to install it. Navigate to [Git SCM website](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and install it accordingly to your operational system.
+
+After installing all these tools, please be sure all of them are working properly. If not, please restart your machine and/or reinstall them.
+
+# How to run
 
 Now, you can either
 
-- download the zip file from this package by simply clicking in the green button <span style="background-color:green; color:white; padding:5px">< > Code</span>. on your top right, unzip it in any desired folder
-  OR
+- download the zip file from this package by simply clicking in the green button <span style="background-color:green; color:white; padding:5px">< > Code</span>. on your top right, unzip it in any desired folder you have admin rights
+
+</br>
+
+OR
+</br>
+
 - use the command `git clone https://github.com/fabriziodidthis/lovelystaycli.git` in a folder you have admin rights. Before doing this, make sure you have it installed on your computer running the command `git`. We will follow this approach for the sake of simplicity.
 
 > Note: if you are using a Windows version prior 11, do this process in a folder as close as possible to the root folder due [Windows characters limit for folders](https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=registry). The limit is 260 characters for a folder path, which can be easily reached with packages.
 
-If you receive a message saying you don't have it installed, please install it according to your OS following [this link](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-
 You are almost there.
 
-Now you have NodeJS, Docker and GIT installed and operational (if not, restart your computer and run all the commands again to be sure all of them are working), you can head over to the folder where you cloned the repository and use the following terminal commands in the sequence below:
+Now you have all necessary tools installed and running and the project already cloned / unzipped in your machine, you will need to build and run the Docker container in order to create the Postgres database in your computer. But, before running any other command, you will need to duplicate the file `.env.example` and rename it to just `.env` and fill all the empty strings after the `=` sign and add all the required information. You can copy the info below and paste over the information copied from here into the `.env` file.
+
+```yaml
+# PostgreSQL related
+POSTGRES_DB='lovelystay'
+POSTGRES_PASSWORD='lovelystaypasswordultrasecret'
+POSTGRES_USER='lovelystayusername'
+POSTGRES_HOST='localhost'
+POSTGRES_DIALECT='postgres'
+```
+
+Now you have all the information needed to create your container. To do this, you can simply head over to your terminal and run the command `yarn docker:build` and wait until the process finishes. You will see a message like this in your terminal
+
+```bash
+lovelystay-database  | 2024-07-01 16:12:19.189 UTC [1] LOG:  database system is ready to accept connections
+lovelystay-adminer   | [Mon Jul  1 16:12:19 2024] PHP 7.4.33 Development Server (http://[::]:8080) started
+```
+
+If you see this image, you successfully built your Docker container and it is now up and running. If not, open your Docker Desktop dashboard and be sure both containers (`Adminer` and `PostgreSQL`) are up and running.
+
+You can use `Adminer`, a web based database management, to see all the data in the database. To use this platform, you can open your preferred browser and navigate to `http://localhost:8080` and log-in using the information provided in the `.env` file. The requested information are
+
+- `SYSTEM` - Here you will select the option `PostgreSQL`, since it is the database used in this application
+- `SERVER` - This is the database container name, where you can see in the `docker-compose.yml`. In this case, `database` is the name.
+- `Username` - Here you will insert the username provided in the `.env` file, in the `POSTGRES_USER=` variable
+- `Password` - Here you will insert the password provided in the `.env` file, in the `POSTGRES_PASSWORD=` variable
+- `Database` - Here you will insert the database name provided in the `.env` file, in the `POSTGRES_DB=` variable
+
+Finally, if you reached to this point successfully, this means you have the application running in your machine. Now, let's use it. Head over to your terminal and use with the following terminal commands from the sequence below:
 
 - `yarn` - to install all the necessary packages to run the application
-- `yarn docker: build` - to create the Docker container and to use the Postgres database and Adminer to visualize the database in a web dashboard.
 - `yarn migration:run` - to create the table and columns required in the database
-- `yarn lovely` - to run the application with the following options below:
-
-  - `-f username` - to fetch and save any valid GitHub username and see the data related to it.
-  - `-s username` - to fetch any valid Github username data from GitHub API and show it in the console
-  - `-w username` - Show user information from the database. Since all usernames are saves all lower case, you can just search for `lovely -w username` instead of whatever is the username.
+- `yarn lovely` - to run the application, you need to choose one of the following options below:
+  - `-f [username]` - to fetch and save any valid GitHub username and see the data related to it.
+  - `-s [username]` - to fetch any valid Github username data from GitHub API and show it in the console
+  - `-w [username]` - Show user information from the database. Since all usernames are saved all lower case, you can just search for `-w [username]` instead of whatever how the username is in the Github.
   - `-l` - to retrieve all the information already saved in the database
-  - `-g 'location' ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `lovely -g New York`. Since the location is saved all lower case, you can just use `lovely -g 'new york'` and you are good to go.
-  - `-la` - Retrieve users from programming language (when informed)
-  - `-pdf` - Retrieve user information saved on the database and create a PDF file with all this information
+  - `-g [location] ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `-g New York`. Since the location is saved all lower case, you can just use `lovely -g 'new york'` and you are good to go.
+  - `-la [language]` - Retrieve users from programming language (when informed)
+  - `-pdf [username]` - Retrieve user information saved on the database and create a PDF file with all this information
 
 ### How to create migrations?
 
@@ -137,7 +172,7 @@ Since I couldn't find the documentation for this same rule for `Free, Pro & Team
 
 Since I had the option to choose between any tool to help me in this time, the libs selected are:
 
-- **TypeORM** - Just a simple choice for using with Typescript. Since one of the rules is to use `pg-promise`, I would only use TypeORM to create migrations and models (as long `pg-promise` doesn't support any of these needs), so TypeORM here will be working only for migration and models but data manipulation.
+- **TypeORM** - Just a simple choice for using with Typescript. Since one of the rules is to use `pg-promise`, I would only use TypeORM to create migrations and models (as long `pg-promise` [doesn't support](https://github.com/vitaly-t/pg-promise/issues/84#issuecomment-177518743) any of these needs), so TypeORM here will be working only for migration and models but data manipulation.
 
 - **Husky** - needless to say its usage. Keep a good linting in the commit messages, run tests and much more before pushing it's always a good choice.
 
@@ -145,7 +180,7 @@ Since I had the option to choose between any tool to help me in this time, the l
 
 - **Commander** - One of the simplest libs to create CLI applications. In this case I could have used `Inquerer`, but it is too cumbersome for a simple task.
 
-- **Adminer** - The simplest database management. Just in case for some reason, a full visualization might be needed in some case for any reason. No particular reason was given to add this tool to the project. The credentials needed to access the dashboard are on the `.env.example` file in the root folder.
+- **Adminer** - The simplest database management. Just in case for some reason, a full visualization might be needed in some case for any reason. No particular reason was given to add this tool to the project. The credentials needed to access the dashboard are extracted from the `.env` file in the root folder.
 
 # **ATTENTION**
 
@@ -155,4 +190,4 @@ Use it with caution.
 
 # Known technical debts
 
-1 - When searching for a specific language using the flag `-la`, break the languages columns to not be a big single line.
+1 - When searching for a specific language using the flag `-la`, break the languages columns after each comma to not be a big single line.
