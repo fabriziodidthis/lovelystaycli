@@ -1,42 +1,35 @@
 {
   "extends": "@tsconfig/node21/tsconfig.json",
-    // Most ts-node options can be specified here using their programmatic names.
+  // Most ts-node options can be specified here using their programmatic names.
   "ts-node": {
     // It is faster to skip typechecking.
     // Remove if you want ts-node to do typechecking.
     "transpileOnly": true,
-
     "files": true,
-
     "compilerOptions": {
       // compilerOptions specified here will override those declared below,
       // but *only* in ts-node.  Useful if you want ts-node and tsc to use
       // different options with a single tsconfig.json.
     }
   },
-   "compilerOptions": {
-      "lib": [
-         "es2021",
-         "es2023"
-      ],
-      "strict": true,
-      "target": "es2022",
-      "module": "Node16",
-      "moduleResolution": "Node16",
-      "allowSyntheticDefaultImports": true,
-      "outDir": "./dist",
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "sourceMap": true,
-      "baseUrl": "src",
-        "types": [
-      "node"
-    ] ,
+  "compilerOptions": {
+    "lib": ["es2021", "es2023"],
+    "strict": true,
+    "target": "es2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "baseUrl": "src",
+    "types": ["node", "pdfmake"],
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "strictPropertyInitialization": false,
-   },
+    "strictPropertyInitialization": false
+  },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

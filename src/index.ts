@@ -14,6 +14,7 @@ import { listUsersByLocation } from './commands/listUsersByLocation.js'
 import { assert } from 'node:console'
 import { listUsersByLanguage } from './commands/listUsersByLanguage.js'
 import { showUserDataFromDatabase } from './commands/showUserDataFromDatabase.js'
+import { createUserPDF } from './utils/createUserPDF.js'
 
 // Import package.json to get version
 // IF, for any reason, there is a need to import package.json, it can be done as follows:
@@ -56,6 +57,7 @@ program
     '-la, --lang',
     'Retrieve users from programming language (when informed)',
   )
+  .option('-pdf, --pdf', 'Create a PDF with user information')
   .combineFlagAndOptionalValue(false)
   .parse(process.argv)
 
@@ -155,4 +157,15 @@ if (options.whois) {
     'Please provide a valid username to fetch user data from the database.',
   )
   void showUserDataFromDatabase(`${process.argv[3]}`)
+}
+
+/**
+ * @description Create a PDF with user information
+ * @param {string} - The username to create a PDF from
+ * @returns {string} - The PDF file with the user information
+ */
+if (options.pdf) {
+  assert(process.argv[3], 'Please provide a valid username to fetch user data.')
+
+  void createUserPDF(`${process.argv[3]}`)
 }
