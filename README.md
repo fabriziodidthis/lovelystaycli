@@ -98,6 +98,7 @@ Now you have NodeJS, Docker and GIT installed and operational (if not, restart y
   - `-l` - to retrieve all the information already saved in the database
   - `-g 'location' ` - Retrieve users from location (when informed in the Github user profile). This option needs to be used between quotes if the city has spaces or special characters. So, the command will be `lovely -g 'New York'` instead of `lovely -g New York`. Since the location is saved all lower case, you can just use `lovely -g 'new york'` and you are good to go.
   - `-la` - Retrieve users from programming language (when informed)
+  - `-pdf` - Retrieve user information saved on the database and create a PDF file with all this information
 
 ### How to create migrations?
 
