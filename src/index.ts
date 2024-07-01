@@ -73,6 +73,7 @@ program.on('--help', () => {
   console.log('  $ lovely -g "Lisbon, Portugal"')
   console.log('  $ lovely -la "JavaScript"')
   console.log('  $ lovely -r fabriziodidthis')
+  console.log('  $ lovely -pdf fabriziodidthis')
 })
 
 const options: programOptions = program.opts()
