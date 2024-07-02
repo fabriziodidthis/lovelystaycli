@@ -3,11 +3,11 @@ import { retrieveUserDataFromDatabase } from '../helpers/retrieveUserDataFromDat
 import { showUserImage } from '../helpers/showUserImage.js'
 
 /**
- * @description Show user information saved in the database
- * @param userData
+ *  Show user information saved in the database
+ * @param {string} username - The username to fetch the user information from along the user image, if available
+ * @type {string}
  * @returns A table with the user information
  */
-
 const showUserDataFromDatabase = async (
   username: string,
 ): Promise<IGithubUser | null> => {

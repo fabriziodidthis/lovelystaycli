@@ -12,8 +12,17 @@
       // different options with a single tsconfig.json.
     }
   },
+  "typedocOptions": {
+    "entryPoints": [
+      "src/index.ts"
+    ],
+    "out": "src/docs"
+  },
   "compilerOptions": {
-    "lib": ["es2021", "es2023"],
+    "lib": [
+      "es2021",
+      "es2023"
+    ],
     "strict": true,
     "target": "es2022",
     "module": "Node16",
@@ -24,12 +33,20 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "baseUrl": "src",
-    "types": ["node", "pdfmake"],
+    "types": [
+      "node",
+      "pdfmake"
+    ],
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "checkJs": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

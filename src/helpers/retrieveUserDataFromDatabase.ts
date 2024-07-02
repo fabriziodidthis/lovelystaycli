@@ -2,8 +2,8 @@ import { db } from '../database/config/pgpromise.js'
 import { githubUserFound, IGithubUser } from '../constants/types.js'
 
 /**
- * @description Fetch user data from Database
- * @param username string
+ * Fetch user data from Database
+ * @param {string} login - The username to fetch the user information from the Database
  * @returns A table with the user information
  */
 const retrieveUserDataFromDatabase = async (

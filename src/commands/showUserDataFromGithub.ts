@@ -2,11 +2,10 @@ import { githubUserFound, IGithubUser } from '../constants/types.js'
 import { fetchUserDataFromGithub } from '../helpers/fetchUserDataFromGithub.js'
 import { showUserImage } from '../helpers/showUserImage.js'
 /**
- * @description Fetch and show user information from the Github API
- * @param username string
+ * Fetch and show user information from the Github API
+ * @param {string} username - The username to fetch the user information from the Github API
  * @returns A table with the user information
  */
-
 const showUserDataFromGithub = async (
   username: string,
 ): Promise<IGithubUser | null> => {
