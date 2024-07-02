@@ -8,6 +8,11 @@ type programOptions = {
   whois?: () => string
   pdf?: () => string
 }
+
+/**
+ * The type of the user found
+ * This is the object returned when you try to fetch a user that exists
+ */
 type githubUserFound = {
   login: string
   id: number
@@ -44,14 +49,26 @@ type githubUserFound = {
   user_languages?: userLanguages
 }
 
+/**
+ * The type of the user not found
+ * This is the object returned when you try to fetch a user that does not exist
+ */
 type githubUserNotFound = {
   message: string
   documentation_url: string
   status: string
 }
 
+/**
+ * The type of the user found or not found
+ * This is the object returned when you try to fetch a user, it can be either found or not found
+ */
 type IGithubUser = githubUserFound | githubUserNotFound
 
+/**
+ * The type of the user repositories
+ * This is the object returned when you try to fetch a user's repositories
+ */
 type userRepositories = [
   {
     id: number
@@ -155,7 +172,11 @@ type userRepositories = [
   },
 ]
 
-type userLanguages = [{ [key: string]: number }]
+/**
+ * The type of the user languages
+ * This is the object returned when you try to fetch a user's languages used in their repositories
+ */
+type userLanguages = { [key: string]: number }
 
 export {
   programOptions,

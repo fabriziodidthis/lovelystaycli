@@ -28,7 +28,7 @@ console.clear()
 console.log(welcomeMessage)
 
 /**
- * @description Setup commander for CLI commands
+ *  Setup commander for CLI commands
  */
 program
   .version(`${process.env.npm_package_version}`)
@@ -83,7 +83,7 @@ if (!process.argv.slice(2).length) {
 }
 
 /**
- * @description When the fetch option is passed, the CLI should fetch the user data
+ *  When the fetch option is passed, the CLI should fetch the user data
  * from the GitHub API and display it in the console.
  *
  * The fetch option should accept a username as an argument.
@@ -100,7 +100,7 @@ if (options.fetch) {
 }
 
 /**
- * @description When the show option is passed, the CLI should show the user data
+ *  When the show option is passed, the CLI should show the user data
  * from the GitHub API and display it in the console.
  * The show option should accept a username as an argument.
  * @param {string} - The username to show data from
@@ -116,7 +116,7 @@ if (options.show) {
 }
 
 /**
- * @description When the list option is passed, the CLI should list the users
+ *  When the list option is passed, the CLI should list the users
  * in the database. This option has no argument.
  * @returns {string} - The data of all users in the database
  */
@@ -125,7 +125,7 @@ if (options.list) {
 }
 
 /**
- * @description List all users by location
+ *  List all users by location
  * @param {string} - The location to list users from
  * @returns {string} - The data of all users in the database based on their location
  */
@@ -135,7 +135,7 @@ if (options.geo) {
 }
 
 /**
- * @description List all users by programming language
+ *  List all users by programming language
  * @param {string} - The programming language to list users from
  * @returns {string} - The data of all users in the database based on the programming language searched
  */
@@ -148,7 +148,7 @@ if (options.lang) {
 }
 
 /**
- * @description Show user data from the database
+ *  Show user data from the database
  * @param {string} - The username to show data from
  * @returns {string} - The data of the user
  */
@@ -161,7 +161,7 @@ if (options.whois) {
 }
 
 /**
- * @description Create a PDF with user information
+ *  Create a PDF with user information
  * @param {string} - The username to create a PDF from
  * @returns {string} - The PDF file with the user information
  */

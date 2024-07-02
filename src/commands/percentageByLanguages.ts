@@ -1,5 +1,11 @@
 import { userLanguages, userRepositories } from '../constants/types.js'
 
+/**
+ *  Fetches the repositories of a user from GitHub
+ * @param {string} username - The username to fetch the repositories from the GitHub API
+ * @type {string}
+ * @returns {Promise<Array<string>>} - The repositories of the user
+ */
 async function fetchRepositories(username: string) {
   const repoUrl = `https://api.github.com/users/${username}/repos`
   const response = await fetch(repoUrl)
@@ -8,9 +14,14 @@ async function fetchRepositories(username: string) {
   return userRepositories.map(repo => repo.name)
 }
 
+/**
+ *  Fetches the programming languages from the specified user repositories on GitHub
+ * @param {string} username - The username to fetch the programming languages from
+ * @returns {Promise<userLanguages | undefined>} - An object with the programming languages and their percentage
+ */
 async function percentageByLanguages(
   username: string,
-): Promise<{ [key: string]: number } | undefined> {
+): Promise<userLanguages | undefined> {
   try {
     const repositories = await fetchRepositories(username)
     const languageData: { [key: string]: number } = {}

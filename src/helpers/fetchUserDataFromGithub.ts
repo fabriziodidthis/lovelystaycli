@@ -1,14 +1,16 @@
+import validateUser from '../validators/usernameValidator.js'
 import { githubUserFound, IGithubUser } from '../constants/types.js'
 
 /**
- * @description Fetch user data from Github API
- * @param username string
- * @returns A table with the user information
+ * Fetch user data from Github API
+ * @param {string} username - The username to fetch the user information from the Github API
+ * @returns A table with the user information, this function DOES NOT save ANY information in the database. It is only used to fetch the user data from the Github API and display it in the console.
  */
 const fetchUserDataFromGithub = async (
   username: string,
 ): Promise<IGithubUser | null> => {
   try {
+    validateUser(username)
     const fetchUserData = await fetch(
       `https://api.github.com/users/${username}`,
     )
