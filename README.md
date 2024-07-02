@@ -14,6 +14,8 @@ Guidelines for tools used in this project
 
 Since this is only a CLI for a test for a job position, I didn't took care of how many request would run in a small time window so, this is the reason for not using `octokit` package (and also because [Github only allows 60 unauthenticated requests per hour](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#primary-rate-limit-for-unauthenticated-users)). Since this would run only a few times and not for real production, I don't need to take care about how many requests will have in a small time window. But, knowing the fact this is for a job position, I need to take care about other things that are already handled in the project as it follows.
 
+Besides this readme file here, you use the docs. Navigate to `src/docs` folder, and open the `index.html` file there. You will see more information for each function and its usage / params.
+
 ---
 
 # Rules
@@ -96,7 +98,7 @@ You are almost there.
 
 Now you have all necessary tools installed and running and the project already cloned / unzipped in your machine, you will need to build and run the Docker container in order to create the Postgres database in your computer. But, before running any other command, you will need to duplicate the file `.env.example` and rename it to just `.env` and fill all the empty strings after the `=` sign and add all the required information. You can copy the info below and paste over the information copied from here into the `.env` file.
 
-```yaml
+```js
 # PostgreSQL related
 POSTGRES_DB='lovelystay'
 POSTGRES_PASSWORD='lovelystaypasswordultrasecret'

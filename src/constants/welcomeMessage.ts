@@ -1,6 +1,9 @@
 import figlet from 'figlet'
 
-// Print the LovelyStay welcome message
+/**
+ * Welcome message to be displayed when the CLI is run
+ * @defaultValue 'LovelyStay CLI!'
+ */
 const welcomeMessage = figlet.textSync('LovelyStay CLI!', {
   font: 'Big',
   horizontalLayout: 'default',

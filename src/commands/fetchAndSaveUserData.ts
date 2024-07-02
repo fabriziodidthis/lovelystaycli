@@ -8,7 +8,12 @@ import { db } from '../database/config/pgpromise.js'
 import { fetchUserDataFromGithub } from '../helpers/fetchUserDataFromGithub.js'
 import { percentageByLanguages } from './percentageByLanguages.js'
 
-// Fetch user data from GitHub API
+/**
+ * This function fetches the user data from the GitHub API
+ * and saves it to the database, along with the languages in all the user's repositories
+ * @param {string} username - The username to be fetched from the GitHub API
+ * @returns {object} - The user data fetched from the GitHub API and a new insertion into the database
+ */
 const fetchAndSaveUserData = async (
   username: string,
 ): Promise<IGithubUser | null> => {
