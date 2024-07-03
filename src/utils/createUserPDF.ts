@@ -29,50 +29,56 @@ const createUserPDF = async (username: string) => {
 
     const docDefinitions: TDocumentDefinitions = {
       defaultStyle: { font: 'Helvetica' },
-      footer: function (currentPage, pageCount) {
-        return currentPage.toString() + ' of ' + pageCount
+      // OK
+      footer: {
+        margin: [10, 0, 25, 0],
+        columns: [
+          { text: `Generated at ${date}`, alignment: 'left' },
+          {
+            text: 'LovelyStayCLI at Github',
+            link: 'https://github.com/fabriziodidthis/lovelystaycli',
+            color: 'blue',
+            alignment: 'right',
+          },
+        ],
       },
+
       header: {
         margin: 10,
+        lineHeight: 1,
+
         columns: [
           {
             image: './dist/utils/images/lovelystay-logo.png',
             width: 200,
+            alignment: 'left',
           },
-          {
-            margin: [10, 0, 0, 0],
-            text: '',
-          },
-          { text: 'LovelyStay', style: 'header' },
+          { text: 'LovelyStay', style: 'header', alignment: 'right' },
         ],
       },
       content: [
-        { columns: [] },
-        { text: user.name, style: 'header' },
+        '\n\n\n\n\n',
         {
-          style: 'table',
-          color: '#444',
           table: {
-            widths: [200, 'auto', 'auto'],
-            // widths: [200, 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto'],
             headerRows: 2,
             body: [
               [
                 {
-                  columns: [
+                  rowSpan: 3,
+                  stack: [
                     {
                       image: userAvatar,
-                      fit: [100, 100],
-                      alignment: 'left',
+                      width: 100,
+                      height: 100,
                     },
+                    { text: `${user.name}`, style: 'subheader' },
+                    { text: `Bio: ${user.bio}`, style: '' },
                   ],
-                  rowSpan: 8,
-
-                  text: `Username: ${user.login}`,
-
                   fillColor: '#eeeeee',
                   border: [false, false, false, false],
                 },
+
                 'Key',
                 'Value',
               ],
@@ -86,17 +92,38 @@ const createUserPDF = async (username: string) => {
             ],
           },
         },
+        {
+          style: 'zebra',
+          table: {
+            body: [
+              [
+                {
+                  rowSpan: 3,
+                  stack: [],
+
+                  text: 'rowSpan: 3\n\nborder:\n[false, false, false, false]',
+                  fillColor: '#eeeeee',
+                  border: [false, false, false, false],
+                },
+                'border:\nundefined',
+                'border:\nundefined',
+              ],
+              ['', 'border:\nundefined', 'border:\nundefined'],
+              ['', 'border:\nundefined', 'border:\nundefined'],
+            ],
+          },
+        },
       ],
 
       styles: {
         header: {
           fontSize: 25,
           bold: true,
-          alignment: 'center',
+          // alignment: 'center',
+          margin: [20, 0, 25, 0],
         },
         subheader: {
-          fontSize: 18,
-          bold: true,
+          fontSize: 14,
           alignment: 'left',
         },
         table: {

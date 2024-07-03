@@ -3,7 +3,7 @@ import got from 'got'
 import { githubUserFound } from '../constants/types.js'
 
 /**
- *  Show user image in the terminal
+ * Show user image in the terminal
  * @param {string} username - The username to fetch the user image from the database
  * @type {Promise<void>}
  * @returns The user image in the terminal (in a very bad resolution =D)
