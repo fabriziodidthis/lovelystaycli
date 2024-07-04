@@ -27,85 +27,173 @@ const createUserPDF = async (username: string) => {
       `https://github.com/${user.login}.png`,
     ).buffer()
 
+    /**
+     * The following code is in case you want to use a local image
+     * It will be saved in the '/pdfs' folder (this can be changed anytime)
+     */
+    /*
+    try {
+      const userAvatarURL = `https://github.com/${userData.login}.png`
+      const fileName = `./pdfs/${userData.login}.png`
+      const fileWriterStream = createWriteStream(fileName)
+      got
+        .stream(userAvatarURL)
+        .pipe(fileWriterStream)
+        .on('finish', () => {
+          console.log('Image downloaded successfully')
+        })
+        .on('error', error => {
+          console.error(`Something went wrong: ${error.message}`)
+        })
+    } catch (error) {
+      console.error('Error downloading image', error)
+    }
+    */
+
     const docDefinitions: TDocumentDefinitions = {
       defaultStyle: { font: 'Helvetica' },
-      footer: function (currentPage, pageCount) {
-        return currentPage.toString() + ' of ' + pageCount
+      pageSize: 'A4',
+
+      info: {
+        title: `Github User - ${user.login}`,
+        subject: `PDF created to display the Github user ${user.login} info`,
+        keywords:
+          'Github, User, PDF, LovelyStayCLI, Fabrizio Andre, fabriziodidthis',
+        creator: 'Fabrizio Andre @fabriziodidthis',
+        author: 'Fabrizio Andre @fabriziodidthis',
+        producer: 'Fabrizio Andre @fabriziodidthis',
       },
+
+      permissions: {
+        printing: 'highResolution',
+        modifying: false,
+        copying: false,
+        annotating: true,
+        fillingForms: true,
+        contentAccessibility: true,
+        documentAssembly: true,
+      },
+
+      footer: {
+        margin: [10, 0, 25, 0],
+        columns: [
+          { text: `Generated at ${date}`, alignment: 'left' },
+          {
+            text: 'LovelyStayCLI at Github',
+            link: 'https://github.com/fabriziodidthis/lovelystaycli',
+            color: 'blue',
+            alignment: 'right',
+          },
+        ],
+      },
+
       header: {
         margin: 10,
+
         columns: [
           {
             image: './dist/utils/images/lovelystay-logo.png',
             width: 200,
+            alignment: 'left',
           },
           {
-            margin: [10, 0, 0, 0],
-            text: '',
+            text: [
+              {
+                text: 'LovelyStayCLI by: ',
+                style: {
+                  fontSize: 20,
+
+                  alignment: 'center',
+                },
+              },
+              {
+                text: '@fabriziodidthis',
+                link: 'https://github.com/fabriziodidthis',
+                style: {
+                  fontSize: 20,
+                  alignment: 'right',
+                  bold: true,
+                },
+              },
+            ],
           },
-          { text: 'LovelyStay', style: 'header' },
         ],
       },
+      watermark: {
+        text: 'LovelyStayCLI by @fabriziodidthis',
+        color: 'blue',
+        opacity: 0.1,
+        bold: true,
+        italics: false,
+      },
       content: [
-        { columns: [] },
-        { text: user.name, style: 'header' },
+        '\n\n\n\n\n\n',
         {
-          style: 'table',
-          color: '#444',
           table: {
-            widths: [200, 'auto', 'auto'],
-            // widths: [200, 'auto', 'auto'],
-            headerRows: 2,
+            widths: ['30%', '30%', '*'],
             body: [
               [
                 {
-                  columns: [
+                  text: 'About User',
+                  style: 'tableHeader',
+                  alignment: 'center',
+                },
+                { text: 'Key', style: 'tableHeader', alignment: 'center' },
+                { text: 'Value', style: 'tableHeader', alignment: 'center' },
+              ],
+              [
+                {
+                  // If any more rows are added, this 'rowSpan' will need to be adjusted
+                  // accordingly to the number of rows added
+                  rowSpan: 8,
+                  colSpan: 1,
+                  border: [false, false, false, false],
+                  fillColor: '#eeeeee',
+                  stack: [
                     {
                       image: userAvatar,
-                      fit: [100, 100],
-                      alignment: 'left',
+                      width: 150,
+                    },
+                    {
+                      text: `${user.name}`,
+                      style: 'subheader',
+                    },
+                    {
+                      text: `Bio: ${user.bio}`,
+                      style: 'bio',
                     },
                   ],
-                  rowSpan: 8,
-
-                  text: `Username: ${user.login}`,
-
-                  fillColor: '#eeeeee',
-                  border: [false, false, false, false],
                 },
-                'Key',
-                'Value',
+                'Login: ',
+                `${user.login}`,
               ],
-              ['', 'Username', `${user.login}`],
-              ['', 'Bio', `${user.bio}`],
+              ['', 'User URL', `${user.html_url}`],
               ['', 'Location', `${user.location}`],
-              ['', 'Hireable', `${user.hireable}`],
+              ['', 'Email: ', `${user.email}`],
+              ['', 'Hirable', `${user.hireable}`],
               ['', 'Twitter', `${user.twitter_username}`],
-              ['', 'Blog', `${user.blog}`],
-              ['', 'Public Repos', `${user.public_repos}`],
+              ['', 'Public Repositories', `${user.public_repos}`],
+              ['', '', ''],
             ],
           },
+          layout: 'lightHorizontalLines',
         },
       ],
-
       styles: {
-        header: {
-          fontSize: 25,
-          bold: true,
-          alignment: 'center',
-        },
         subheader: {
           fontSize: 18,
-          bold: true,
           alignment: 'left',
-        },
-        table: {
-          margin: [0, 0, 0, 0],
+          bold: true,
+          marginTop: 15,
         },
         tableHeader: {
           bold: true,
           fontSize: 13,
           color: 'black',
+        },
+        bio: {
+          fontSize: 14,
+          alignment: 'left',
         },
       },
     }
