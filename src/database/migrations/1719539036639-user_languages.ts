@@ -6,7 +6,7 @@ export class UserLanguages1719539036639 implements MigrationInterface {
       'github_users',
       new TableColumn({
         name: 'user_languages',
-        type: 'varchar',
+        type: 'jsonb',
         isArray: true,
       }),
     )

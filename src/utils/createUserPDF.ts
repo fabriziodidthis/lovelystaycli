@@ -1,10 +1,9 @@
 import { retrieveUserDataFromDatabase } from '../helpers/retrieveUserDataFromDatabase.js'
 import fs from 'node:fs'
-import got from 'got'
 
 import PDFPrinter from 'pdfmake'
 import { TDocumentDefinitions } from 'pdfmake/interfaces.js'
-import { githubUserFound } from 'constants/types.js'
+import { githubUserFound, userLanguages } from '../constants/types.js'
 
 const createUserPDF = async (username: string) => {
   const user: githubUserFound = (await retrieveUserDataFromDatabase(
@@ -22,13 +21,31 @@ const createUserPDF = async (username: string) => {
     },
   }
 
+  function formatLanguagePercentages(input: string): string {
+    const languagesArray: userLanguages = JSON.parse(input)
+    const languages = languagesArray[0]
+
+    if (Object.keys(languages).length === 0) {
+      console.info(`User ${user.login} has no repositories to analyze`)
+      process.exit(0)
+    }
+
+    let output = ''
+    for (const [key, value] of Object.entries(languages)) {
+      const formattedKey = key.charAt(0).toUpperCase() + key.slice(1)
+      output += `${formattedKey}: ${value}%\n`
+    }
+
+    return output.trim()
+  }
+
   try {
-    const userAvatar = await got(
-      `https://github.com/${user.login}.png`,
-    ).buffer()
+    const fetchUserAvatar = await fetch(`https://github.com/${user.login}.png`)
+    const arrayBuffer = await fetchUserAvatar.arrayBuffer()
+    const userAvatar = Buffer.from(arrayBuffer)
 
     /**
-     * The following code is in case you want to use a local image
+     * The following code is in case you want to save a local image from the user avatar
      * It will be saved in the '/pdfs' folder (this can be changed anytime)
      */
     /*
@@ -67,7 +84,7 @@ const createUserPDF = async (username: string) => {
       permissions: {
         printing: 'highResolution',
         modifying: false,
-        copying: false,
+        copying: true,
         annotating: true,
         fillingForms: true,
         contentAccessibility: true,
@@ -94,6 +111,7 @@ const createUserPDF = async (username: string) => {
           {
             image: './dist/utils/images/lovelystay-logo.png',
             width: 200,
+            margin: [15, 0, 0, 0],
             alignment: 'left',
           },
           {
@@ -129,8 +147,10 @@ const createUserPDF = async (username: string) => {
       content: [
         '\n\n\n\n\n\n',
         {
+          margin: [-30, 0, 0, 0],
           table: {
-            widths: ['30%', '30%', '*'],
+            widths: ['30%', '22%', '48%'],
+
             body: [
               [
                 {
@@ -152,7 +172,7 @@ const createUserPDF = async (username: string) => {
                   stack: [
                     {
                       image: userAvatar,
-                      width: 150,
+                      width: 160,
                     },
                     {
                       text: `${user.name}`,
@@ -173,7 +193,13 @@ const createUserPDF = async (username: string) => {
               ['', 'Hirable', `${user.hireable}`],
               ['', 'Twitter', `${user.twitter_username}`],
               ['', 'Public Repositories', `${user.public_repos}`],
-              ['', '', ''],
+              [
+                '',
+                'User Languages',
+                formatLanguagePercentages(
+                  JSON.stringify(user.user_languages || {}),
+                ),
+              ],
             ],
           },
           layout: 'lightHorizontalLines',

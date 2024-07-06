@@ -65,7 +65,7 @@ async function percentageByLanguages(
     const formattedOutput: { [key: string]: number } =
       languagePercentages.reduce((acc, { language, percentage }) => {
         // @ts-expect-error - language is a string
-        acc[language] = `${percentage}%`
+        acc[language] = `${percentage}`
         return acc
       }, {})
 

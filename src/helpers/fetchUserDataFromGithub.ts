@@ -19,9 +19,11 @@ const fetchUserDataFromGithub = async (
     }
     if (fetchUserData.status === 403) {
       console.log('You have exceeded the rate limit for GitHub API.')
+      process.exit(0)
     }
     if (fetchUserData.status === 404) {
       console.log(`The username - ${username} - could not be found.`)
+      process.exit(0)
     }
     const fetchUserDataToJSON: githubUserFound =
       (await fetchUserData.json()) as githubUserFound
