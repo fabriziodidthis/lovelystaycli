@@ -1,5 +1,4 @@
 import terminalImage from 'terminal-image'
-import got from 'got'
 import { githubUserFound } from '../constants/types.js'
 
 /**
@@ -9,9 +8,13 @@ import { githubUserFound } from '../constants/types.js'
  * @returns The user image in the terminal (in a very bad resolution =D)
  */
 const showUserImage = async (username: githubUserFound) => {
-  const userIMG = await got(username.avatar_url).buffer()
+  const fetchUserAvatar = await fetch(
+    `https://github.com/${username.login}.png`,
+  )
+  const arrayBuffer = await fetchUserAvatar.arrayBuffer()
+  const userAvatar = Buffer.from(arrayBuffer)
   console.log(
-    await terminalImage.buffer(userIMG, {
+    await terminalImage.buffer(userAvatar, {
       width: '30%',
       height: '30%',
       preserveAspectRatio: true,

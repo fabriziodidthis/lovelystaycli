@@ -84,11 +84,12 @@ const fetchAndSaveUserData = async (
     const userLanguages = (await percentageByLanguages(
       username,
     )) as unknown as userLanguages[]
+    const userLanguagesArray = [userLanguages]
 
     // Save the user data to the database
     try {
       await db.none(
-        'INSERT INTO github_users(login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin, name, company, blog, location, email, hireable, bio, twitter_username, public_repos, public_gists, followers, following, created_at, updated_at, user_languages) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, ARRAY[$33])',
+        'INSERT INTO github_users(login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin, name, company, blog, location, email, hireable, bio, twitter_username, public_repos, public_gists, followers, following, created_at, updated_at, user_languages) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33::jsonb[])',
         [
           loginToLowercase,
           id,
@@ -122,7 +123,8 @@ const fetchAndSaveUserData = async (
           following,
           created_at,
           updated_at,
-          userLanguages,
+          // userLanguages,
+          userLanguagesArray,
         ],
       )
       console.log(`User ${JSON.stringify(login)} saved successfully`)
