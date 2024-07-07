@@ -10,18 +10,19 @@ const retrieveUserDataFromDatabase = async (
   login: string,
 ): Promise<IGithubUser | null> => {
   try {
-    const retrieveUserData = await db.oneOrNone(
+    const retrieveUserData: githubUserFound = (await db.oneOrNone(
       'SELECT * FROM github_users WHERE login = $1',
       [login] as string[],
-    )
+    )) as githubUserFound
+
     if (!retrieveUserData) {
-      console.error(`The username ${login} could not be found in the database.`)
+      console.error(
+        `The username - ${login} - could not be found in the database.`,
+      )
+      process.exit(0)
     }
 
-    const retrieveUserDataToJSON: githubUserFound =
-      (await retrieveUserData) as githubUserFound
-
-    return retrieveUserDataToJSON
+    return retrieveUserData
   } catch (error) {
     console.error(
       'Something went wrong while retrieving the user, try again later.',
