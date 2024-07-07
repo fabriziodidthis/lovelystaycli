@@ -28,7 +28,7 @@
   "scripts": {
     "build": "rimraf ./dist && npx tsc ",
     "build:dev": "npx tsc -w",
-    "lovely": "yarn build && copyfiles -u 2 ./src/assets/*.* ./dist/utils/images && node -r dotenv/config ./dist/index.js",
+    "lovely": "yarn build && copyfiles -u 2 ./src/assets/*.* ./dist/utils/images && yarn docs && node -r dotenv/config ./dist/index.js",
     "start": "node --loader ts-node/esm src/index.ts",
     "typeorm": "typeorm-ts-node-esm",
     "migration:create": "yarn typeorm migration:create ./src/database/migrations/${name}",
