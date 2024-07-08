@@ -15,7 +15,8 @@ async function fetchRepositories(username: string) {
 }
 
 /**
- *  Fetches the programming languages from the specified user repositories on GitHub
+ * Fetch the user repositories languages from GitHub API and calculate the percentage of each language
+ * in all user's repositories
  * @param {string} username - The username to fetch the programming languages from
  * @returns {Promise<userLanguages | undefined>} - An object with the programming languages and their percentage
  */
