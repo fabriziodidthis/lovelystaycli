@@ -180,7 +180,7 @@ Since I had the option to choose between any tool to help me in this time, the l
 
 - **Vitest** - One of the best tools today to the test runner.
 
-- **Commander** - One of the simplest libs to create CLI applications. In this case I could have used `Inquerer`, but it is too cumbersome for a simple task.
+- **Commander** - One of the simplest libs to create CLI applications. `Inquirer` is also being used in this project to prompt user with questions along the application usage.
 
 - **Adminer** - The simplest database management. Just in case for some reason, a full visualization might be needed in some case for any reason. No particular reason was given to add this tool to the project. The credentials needed to access the dashboard are extracted from the `.env` file in the root folder.
 
