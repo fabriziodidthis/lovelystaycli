@@ -10,6 +10,10 @@ Guidelines for tools used in this project
 - [Typescript-eslint](https://typescript-eslint.io/rules/)
 - [Vitest](https://vitest.dev/guide/)
 
+#### Note
+
+This project has a VSCode workspace file (`lovelystaycli.code-workspace`), where it has several configurations and extensions already configured exactly for this project. If you feel comfortable, prefer to use this workspace rather than just opening the folder.
+
 ### Quick disclaimer
 
 Since this is only a CLI for a test for a job position, I didn't took care of how many request would run in a small time window so, this is the reason for not using `octokit` package (and also because [Github only allows 60 unauthenticated requests per hour](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#primary-rate-limit-for-unauthenticated-users)). Since this would run only a few times and not for real production, I don't need to take care about how many requests will have in a small time window. But, knowing the fact this is for a job position, I need to take care about other things that are already handled in the project as it follows.
