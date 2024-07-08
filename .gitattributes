@@ -2,5 +2,5 @@
 # https://git-scm.com/docs/gitattributes
 # and
 # https://github.com/github-linguist/linguist/blob/master/docs/overrides.md
-docs/** linguist-vendored
+src/docs/** linguist-vendored
 pdfs/** linguist-vendored
