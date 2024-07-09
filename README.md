@@ -27,35 +27,37 @@ Besides this readme file here, you use the docs. Navigate to `src/docs` folder, 
 Your goal is to develop a command-line application using NodeJS + TypeScript + PostgreSQL, whose goals are:
 
 - [x] 1. Fetch information about a given GitHub user (passed as a command-line argument) using the [GitHub API](https://docs.github.com/en/rest), and store it on one or more database tables - the mandatory fields are:
+
   - [x] Name
   - [x] Location
   - [x] bonus points for additional fields;
 
-[x] 2. Using a different command-line option, it:
+- [x] 2. Using a different command-line option, it:
 
-- [x] should be possible to
-  - [x] fetch and display all users already on the database (showing them on the command line);
+  - [x] should be possible to
+    - [x] fetch and display all users already on the database (showing them on the command line);
 
-[x] 3. Improving on the previous requirement, it should also
+- [x] 3. Improving on the previous requirement, it should also
 
-- [x] be possible to list users only from a given location (again, using a command-line option);
+  - [x] be possible to list users only from a given location (again, using a command-line option);
 
-[x] 4. Finally, the application should also query:
+- [x] 4. Finally, the application should also query:
 
-- [x] the programming languages this user seems to know/have repositories with, and store them on the database as well -
-      [x] allowing to query a user per location
-      [c] and/or programming languages;
+  - [x] the programming languages this user seems to know/have repositories with, and store them on the database as well
+    - [x] allowing to query a user per location
+    - [x] and/or programming languages;
 
 There are some mandatory requirements:
-[x] You must use:
 
-- [x] NodeJS
-- [x] TypeScript
-- [x] PostgreSQL;
+- [x] You must use:
 
-[x] You should setup the database using migrations, if possible (preferably using SQL, but not mandatory) - feel free to use external tools or libraries for this purpose;
+  - [x] NodeJS
+  - [x] TypeScript
+  - [x] PostgreSQL;
 
-[x] Code should be split into database functions and general processing functions, when possible;
+- [x] You should setup the database using migrations, if possible (preferably using SQL, but not mandatory) - feel free to use external tools or libraries for this purpose;
+
+- [x] Code should be split into database functions and general processing functions, when possible;
 
 - [x] For database access, you must use this library: https://github.com/vitaly-t/pg-promise
 - [x] For the processing (business logic) functions you should use either native ES6 functions or the library https://ramdajs.com/docs/ (or both);
@@ -172,7 +174,7 @@ So, to sum up, basically the rules are
 - A dash cannot be the last character
 - The total length of the username must be between 1 and 39 characters (1 character for the first [a-z\d] and up to 38 for the part in the non-capturing group).
 
-Since I couldn't find the documentation for this same rule for `Free, Pro & Teams`, I will assume these rules works for all levels, regardless if there are any other rule. Having knowledge of all these rules, there is the `usernameValidator` file in `src/helpers` folder, to enforce these rules, data sanitization and to assert the username provided in the CLI. There is this same rule in the same but in the file `githubUsername`, but this one only works in the entities due its implementation for TypeORM `classs-validator` decorators.
+Since I couldn't find relevant documentation for this same rule for `Free, Pro & Teams`, I will assume these rules works for all levels, regardless if there are any other rule. Having knowledge of all these rules, there is the `usernameValidator` file in `src/helpers` folder, to enforce these rules, data sanitization and to assert the username provided in the CLI. There is this same rule in the same but in the file `githubUsername`, but this one only works in the entities due its implementation for TypeORM `classs-validator` decorators.
 
 ### Reasons for each package
 
@@ -196,4 +198,4 @@ Use it with caution.
 
 # Known technical debts
 
-1 - When searching for a specific language using the flag `-la`, break the languages columns after each comma to not be a big single line.
+1 - When searching for a specific language using the flag `-la`, break the languages columns after each comma to not be a big single line. But if you prefer, you can export the user info to a PDF file using the flag `-pdf [username]` for now.

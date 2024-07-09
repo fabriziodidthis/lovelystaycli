@@ -47,6 +47,7 @@ type githubUserFound = {
   created_at: Date
   updated_at: Date
   user_languages?: userLanguages
+  saved_in?: Date
 }
 
 /**

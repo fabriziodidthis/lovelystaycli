@@ -13,7 +13,6 @@ import { fetchUserDataFromGithub } from './fetchUserDataFromGithub.js'
  * @type {Promise<void>}
  * @returns The user info updated in the database
  */
-
 const updateUserInfo = async (username: string): Promise<void> => {
   try {
     // Delete the user row
@@ -22,6 +21,7 @@ const updateUserInfo = async (username: string): Promise<void> => {
 
     const newUserData: IGithubUser | null =
       await fetchUserDataFromGithub(username)
+
     const {
       login,
       id,
@@ -65,10 +65,11 @@ const updateUserInfo = async (username: string): Promise<void> => {
     const userLanguagesArray = [userLanguages]
     const locationToLowercase = location?.toLowerCase()
     const loginToLowercase = login.toLowerCase()
+    const userInsertionDate = new Date().toISOString()
 
     // Insert the new user data into the database
     await db.none(
-      'INSERT INTO github_users(login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin, name, company, blog, location, email, hireable, bio, twitter_username, public_repos, public_gists, followers, following, created_at, updated_at, user_languages) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33::jsonb[])',
+      'INSERT INTO github_users(login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin, name, company, blog, location, email, hireable, bio, twitter_username, public_repos, public_gists, followers, following, created_at, updated_at, user_languages, saved_in) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33::jsonb[], $34)',
       [
         loginToLowercase,
         id,
@@ -103,6 +104,7 @@ const updateUserInfo = async (username: string): Promise<void> => {
         created_at,
         updated_at,
         userLanguagesArray,
+        userInsertionDate,
       ],
     )
 
