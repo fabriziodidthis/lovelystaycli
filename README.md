@@ -89,9 +89,7 @@ After installing all these tools, please be sure all of them are working properl
 
 Now, you can either
 
-- download the zip file from this package by simply clicking in the green button <div style="width: 100%;">
-  <img src="./code.svg" style="width: 100%;" alt="< > Code">
-  </div>. on your top right, unzip it in any desired folder you have admin rights
+- download the zip file from this package by simply clicking in the green button <span style="background-color:green; color:white; padding:5px">< > Code</span>. on your top right, unzip it in any desired folder you have admin rights
 
 </br>
 
