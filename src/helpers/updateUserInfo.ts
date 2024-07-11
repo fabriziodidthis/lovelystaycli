@@ -112,7 +112,7 @@ const updateUserInfo = async (username: string): Promise<void> => {
       ...newUserData,
       user_languages: userLanguagesArray,
     }
-    console.log(`User ${username} has been updated in the database.`)
+    console.log(`User ${username} has been saved in the database again.`)
     console.table(displayUserData)
   } catch (error) {
     console.error('Something went on updating user info', error)

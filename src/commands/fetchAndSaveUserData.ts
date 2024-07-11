@@ -7,7 +7,7 @@ import validateUser from '../validators/usernameValidator.js'
 import { db } from '../database/config/pgpromise.js'
 import { fetchUserDataFromGithub } from '../helpers/fetchUserDataFromGithub.js'
 import { percentageByLanguages } from './percentageByLanguages.js'
-import inquirer from 'inquirer'
+import { input } from '@inquirer/prompts'
 import { updateUserInfo } from '../helpers/updateUserInfo.js'
 
 /**
@@ -149,16 +149,9 @@ const fetchAndSaveUserData = async (
       )
     }
   } else {
-    const { update }: { update: boolean } = await inquirer.prompt<{
-      update: boolean
-    }>([
-      {
-        type: 'confirm',
-        name: 'update',
-        message: `User ${username} already exists in the database. Do you want to update the user?`,
-        default: false,
-      },
-    ])
+    const update = await input({
+      message: `User ${username} already exists in the database. Do you want to update the user?`,
+    })
 
     if (update) {
       console.log(`Updating user ${username}`)

@@ -25,7 +25,7 @@ async function percentageByLanguages(
 ): Promise<userLanguages | undefined> {
   try {
     const repositories = await fetchRepositories(username)
-    const languageData: { [key: string]: number } = {}
+    const languageData: userLanguages = {}
 
     for (const repository of repositories) {
       const url = `https://api.github.com/repos/${username}/${repository}/languages`
@@ -63,12 +63,13 @@ async function percentageByLanguages(
       ) => parseFloat(b.percentage) - parseFloat(a.percentage),
     )
 
-    const formattedOutput: { [key: string]: number } =
-      languagePercentages.reduce((acc, { language, percentage }) => {
-        // @ts-expect-error - language is a string
-        acc[language] = `${percentage}`
+    const formattedOutput: userLanguages = languagePercentages.reduce(
+      (acc: userLanguages, { language, percentage }) => {
+        acc[language] = parseFloat(percentage)
         return acc
-      }, {})
+      },
+      {},
+    )
 
     return formattedOutput
   } catch (error) {
