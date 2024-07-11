@@ -2,6 +2,7 @@ import { githubUserFound } from 'constants/types.js'
 import { db } from '../database/config/pgpromise.js'
 import pg from 'pg-promise'
 import { validateInput } from '../validators/inputValidator.js'
+import { formatUserLanguages } from '../helpers/formatUserLanguagesForTable.js'
 const { ParameterizedQuery } = pg
 
 /**
@@ -29,21 +30,9 @@ async function listUsersByLanguage(language: string): Promise<void> {
         'No users found for the specified language. Please check the language string and database content.',
       )
     } else {
-      const formattedUsers = users.map(user => ({
-        ...user,
-        user_languages:
-          user.user_languages ??
-          []
-            .map((lang: string) => {
-              const parsedLang: { [key: string]: number } = JSON.parse(lang)
-              return Object.entries(parsedLang)
-                .map(([key, value]) => `${key}: ${value}`)
-                .join('\n')
-            })
-            .join('\n'),
-      }))
+      const format = formatUserLanguages(users)
       console.log(`Found ${users.length} users with language: '${language}'`)
-      console.table(formattedUsers, [
+      console.table(format, [
         'name',
         'login',
         'location',

@@ -1,4 +1,5 @@
-import { githubUserFound, userLanguages } from '../constants/types.js'
+import { formatUserLanguages } from '../helpers/formatUserLanguagesForTable.js'
+import { githubUserFound } from '../constants/types.js'
 import { db } from '../database/config/pgpromise.js'
 
 /**
@@ -6,35 +7,25 @@ import { db } from '../database/config/pgpromise.js'
  * @returns - A table with all users in the database with selected columns to fit better in the console
  */
 const listAllUsers = async (): Promise<void> => {
-  console.log(`
-  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
-        Fetching users data from database
-
-  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-  `)
-
   try {
     const users = (await db.any(
-      'SELECT * FROM github_users',
+      'SELECT * FROM github_users, unnest(user_languages) ',
     )) as unknown as githubUserFound[]
 
-    const formattedUsers = users.map(user => ({
-      ...user,
-      user_languages:
-        user?.user_languages ??
-        []
-          .map((lang: string) => {
-            const parsedLang: userLanguages = JSON.parse(lang)
-            return Object.entries(parsedLang)
-              .map(([key, value]) => `${key}: ${value}`)
-              .join('\n')
-          })
-          .join('\n'),
-    }))
+    const format = formatUserLanguages(users)
 
-    if (users.length > 0) {
-      console.table(formattedUsers, [
+    if (users.length === 0) {
+      console.error('No users found.')
+    } else {
+      console.log(`
+      -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+            Fetching users data from database
+
+      -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+      `)
+
+      console.table(format, [
         'name',
         'login',
         'html_url',
@@ -42,8 +33,6 @@ const listAllUsers = async (): Promise<void> => {
         'hireable',
         'user_languages',
       ])
-    } else {
-      console.error('No users found.')
     }
   } catch (error) {
     console.error('An error occurred while fetching users data.', error)
